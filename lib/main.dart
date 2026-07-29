@@ -5,6 +5,7 @@ import 'utils/theme_provider.dart';
 import 'widgets/navbar.dart';
 import 'widgets/splash_screen.dart';
 import 'screens/home_page.dart';
+import 'screens/projects_page.dart';
 import 'screens/skills_page.dart';
 import 'screens/experience_page.dart';
 import 'screens/contact_page.dart';
@@ -80,10 +81,12 @@ class _MainShellState extends State<MainShell> {
 
   final List<Widget> _screens = const [
     HomePage(),
+    ProjectsPage(),
     SkillsPage(),
     ExperiencePage(),
     ContactPage(),
   ];
+
 
   void _onTabChanged(int i) {
     setState(() {

@@ -17,8 +17,8 @@ class HomePage extends StatelessWidget {
         children: const [
           _HeroSection(),
           _TechBanner(),
-          _ProjectsSection(),
-          _SyntheticSection(),
+          _FeaturedProjectsSection(),
+          _ArchitectureSection(),
           PortfolioFooter(),
         ],
       ),
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// ─── HERO ─────────────────────────────────────────────────────────────────────
+// ─── HERO SECTION ─────────────────────────────────────────────────────────────
 class _HeroSection extends StatelessWidget {
   const _HeroSection();
 
@@ -34,14 +34,14 @@ class _HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = AppThemeColors.of(context);
     final w = MediaQuery.of(context).size.width;
-    final isMobile = w < 800;
+    final isMobile = w < 850;
     final h = MediaQuery.of(context).size.height;
 
     return Container(
       width: double.infinity,
       constraints: BoxConstraints(minHeight: isMobile ? 0 : h * 0.88),
       padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? 20 : w * 0.05,
+        horizontal: isMobile ? 20 : w * 0.06,
         vertical: isMobile ? 40 : 60,
       ),
       child: isMobile
@@ -55,6 +55,8 @@ class _HeroSection extends StatelessWidget {
               FadeSlideIn(delay: const Duration(milliseconds: 260), child: _buttons(c)),
               const SizedBox(height: 32),
               FadeSlideIn(delay: const Duration(milliseconds: 340), child: _TerminalBox(c: c)),
+              const SizedBox(height: 32),
+              FadeSlideIn(delay: const Duration(milliseconds: 400), child: _ProfileCard(c: c)),
             ])
           : Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
               Expanded(
@@ -67,11 +69,11 @@ class _HeroSection extends StatelessWidget {
                   FadeSlideIn(delay: const Duration(milliseconds: 180), child: _subtitle(c, isMobile)),
                   const SizedBox(height: 32),
                   FadeSlideIn(delay: const Duration(milliseconds: 260), child: _buttons(c)),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 36),
                   FadeSlideIn(delay: const Duration(milliseconds: 340), child: _TerminalBox(c: c)),
                 ]),
               ),
-              SizedBox(width: w * 0.04),
+              SizedBox(width: w * 0.05),
               Expanded(
                 flex: 4,
                 child: Column(children: [
@@ -84,9 +86,9 @@ class _HeroSection extends StatelessWidget {
                   FadeSlideIn(
                     delay: const Duration(milliseconds: 360),
                     child: Row(children: [
-                      Expanded(child: _StatCard(value: "7+", label: "Apps Shipped", c: c)),
+                      Expanded(child: _StatCard(value: "9+", label: "Apps Built", c: c)),
                       const SizedBox(width: 14),
-                      Expanded(child: _StatCard(value: "99%", label: "Uptime AI", c: c)),
+                      Expanded(child: _StatCard(value: "1.5+", label: "Years Exp", c: c)),
                     ]),
                   ),
                 ]),
@@ -96,32 +98,37 @@ class _HeroSection extends StatelessWidget {
   }
 
   Widget _badge(AppThemeColors c) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
         decoration: BoxDecoration(
-          border: Border.all(color: c.cardBorder),
+          border: Border.all(color: c.primary.withValues(alpha: 0.3)),
           borderRadius: BorderRadius.circular(20),
-          color: c.surface,
+          color: c.greenTint,
         ),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
-          Container(width: 7, height: 7,
+          Container(
+              width: 8,
+              height: 8,
               decoration: BoxDecoration(shape: BoxShape.circle, color: c.accentGreen)),
           const SizedBox(width: 8),
-          Text("SYSTEM READY: ASSOCIATE FLUTTER DEVELOPER",
-              style: GoogleFonts.jetBrainsMono(
-                  fontSize: 10, color: c.textSecondary, letterSpacing: 0.4)),
+          Text(
+            "ASSOCIATE FLUTTER DEVELOPER • LAHORE",
+            style: GoogleFonts.inter(
+                fontSize: 11, fontWeight: FontWeight.w700, color: c.primaryDark, letterSpacing: 0.6),
+          ),
         ]),
       );
 
   Widget _title(AppThemeColors c, bool isMobile) => RichText(
         text: TextSpan(
           style: GoogleFonts.inter(
-              fontSize: isMobile ? 32 : 50,
+              fontSize: isMobile ? 32 : 48,
               fontWeight: FontWeight.w800,
               color: c.textPrimary,
               height: 1.15),
           children: [
-            const TextSpan(text: "Building the Future of\nMobile with "),
-            TextSpan(text: "Flutter & AI",
+            const TextSpan(text: "Building High-Performance\nApps with "),
+            TextSpan(
+                text: "Flutter & AI",
                 style: TextStyle(color: c.primary)),
           ],
         ),
@@ -130,14 +137,14 @@ class _HeroSection extends StatelessWidget {
   Widget _subtitle(AppThemeColors c, bool isMobile) => Text(
         PortfolioData.heroSubtitle,
         style: GoogleFonts.inter(
-            fontSize: isMobile ? 14 : 15,
+            fontSize: isMobile ? 14 : 15.5,
             color: c.textSecondary,
             height: 1.7),
       );
 
   Widget _buttons(AppThemeColors c) => Wrap(spacing: 12, runSpacing: 12, children: [
-        _PrimaryButton(label: "View Portfolio →", url: "mailto:${PortfolioData.email}", c: c),
-        _OutlineButton(label: "Download CV", url: "mailto:${PortfolioData.email}", c: c),
+        _PrimaryButton(label: "Get In Touch →", url: "mailto:${PortfolioData.email}", c: c),
+        _OutlineButton(label: "GitHub Profile", url: PortfolioData.github, c: c),
       ]);
 }
 
@@ -148,28 +155,36 @@ class _TerminalBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: c.surface,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: c.cardBorder),
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Text("CORE_ENGINE_STATUS",
-              style: GoogleFonts.jetBrainsMono(
-                  fontSize: 10, color: c.textSecondary, letterSpacing: 0.5)),
+          Text("CORE_ARCHITECTURE_STATUS",
+              style: GoogleFonts.inter(
+                  fontSize: 11, fontWeight: FontWeight.w700, color: c.textPrimary, letterSpacing: 0.5)),
           const Spacer(),
-          Text("ACTIVE",
-              style: GoogleFonts.jetBrainsMono(
-                  fontSize: 10, color: c.accentGreen, letterSpacing: 0.5)),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(color: c.greenTint, borderRadius: BorderRadius.circular(4)),
+            child: Text("ONLINE",
+                style: GoogleFonts.inter(
+                    fontSize: 10, fontWeight: FontWeight.w700, color: c.primaryDark, letterSpacing: 0.5)),
+          ),
         ]),
         const SizedBox(height: 14),
         ...PortfolioData.terminalLines.map((line) => Padding(
-              padding: const EdgeInsets.only(bottom: 5),
+              padding: const EdgeInsets.only(bottom: 6),
               child: Row(children: [
-                Text(">>> ", style: GoogleFonts.jetBrainsMono(fontSize: 13, color: c.primary)),
-                Text(line, style: GoogleFonts.jetBrainsMono(fontSize: 13, color: c.textSecondary)),
+                Text("❯ ", style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: c.primary)),
+                Expanded(
+                  child: Text(line,
+                      style: GoogleFonts.jetBrainsMono(fontSize: 12.5, color: c.textSecondary),
+                      overflow: TextOverflow.ellipsis),
+                ),
               ]),
             )),
       ]),
@@ -183,82 +198,104 @@ class _ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HoverCard(
-      child: Container(
-        decoration: BoxDecoration(
-          color: c.card,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: c.cardBorder),
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Stack(children: [
-              SizedBox(
-                height: 260,
-                width: double.infinity,
-                child: Image.asset('assets/images/my-pic.png',
-                    fit: BoxFit.contain,
-                    alignment: Alignment.topCenter,
-                    errorBuilder: (_, __, ___) => Container(
-                        height: 260, color: c.surface,
-                        child: Icon(Icons.person_outline, color: c.textMuted, size: 60))),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: c.cardBorder),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 16,
+            offset: const Offset(0, 4),
+          )
+        ],
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          child: Stack(children: [
+            SizedBox(
+              height: 270,
+              width: double.infinity,
+              child: Image.asset(
+                'assets/images/my-pic.png',
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+                errorBuilder: (_, __, ___) => Container(
+                  height: 270,
+                  color: c.surface,
+                  child: Icon(Icons.person_outline, color: c.textMuted, size: 70),
+                ),
               ),
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.55, 1.0],
-                      colors: [Colors.transparent, Colors.black.withValues(alpha: 0.8)],
-                    ),
+            ),
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0.5, 1.0],
+                    colors: [Colors.transparent, Colors.black.withValues(alpha: 0.85)],
                   ),
                 ),
               ),
-              Positioned(bottom: 14, left: 16, child: Column(
+            ),
+            Positioned(
+              bottom: 16,
+              left: 18,
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Musaf Ali",
-                      style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w800, color: Colors.white)),
-                  Text("Associate Flutter Developer",
-                      style: GoogleFonts.jetBrainsMono(fontSize: 11, color: c.primary)),
+                  Text(
+                    "Musaf Ali",
+                    style: GoogleFonts.inter(fontSize: 22, fontWeight: FontWeight.w800, color: Colors.white),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    "Associate Flutter Developer",
+                    style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: c.primaryLight),
+                  ),
                 ],
-              )),
-            ]),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Wrap(spacing: 8, runSpacing: 8,
-                children: ["Flutter & Dart", "Firebase", "GetX / MVC", "AI Integration", "App Store"]
-                    .map((s) => Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: c.surface,
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: c.cardBorder),
-                          ),
-                          child: Text(s, style: GoogleFonts.jetBrainsMono(fontSize: 10, color: c.textSecondary)),
-                        ))
-                    .toList(),
               ),
-              const SizedBox(height: 12),
-              Row(children: [
-                Icon(Icons.location_on_outlined, size: 13, color: c.textSecondary),
-                const SizedBox(width: 4),
-                Text("Gujrat, Pakistan", style: GoogleFonts.inter(fontSize: 12, color: c.textSecondary)),
-                const SizedBox(width: 14),
-                Container(width: 7, height: 7,
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: c.accentGreen)),
-                const SizedBox(width: 5),
-                Text("Available for work",
-                    style: GoogleFonts.inter(fontSize: 12, color: c.accentGreen, fontWeight: FontWeight.w500)),
-              ]),
+            ),
+          ]),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(18),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: ["Flutter & Dart", "GetX / MVC", "Firebase", "Gemini AI", "NFC & Maps", "In-App Purchases"]
+                  .map((s) => Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: c.surface,
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: c.cardBorder),
+                        ),
+                        child: Text(s,
+                            style: GoogleFonts.inter(
+                                fontSize: 11, fontWeight: FontWeight.w600, color: c.textSecondary)),
+                      ))
+                  .toList(),
+            ),
+            const SizedBox(height: 14),
+            Row(children: [
+              const Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary),
+              const SizedBox(width: 5),
+              Text(PortfolioData.location,
+                  style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: c.textSecondary)),
+              const Spacer(),
+              Container(width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: c.accentGreen)),
+              const SizedBox(width: 6),
+              Text("Available",
+                  style: GoogleFonts.inter(fontSize: 12, color: c.accentGreen, fontWeight: FontWeight.w700)),
             ]),
-          ),
-        ]),
-      ),
+          ]),
+        ),
+      ]),
     );
   }
 }
@@ -271,23 +308,28 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HoverCard(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-        decoration: BoxDecoration(
-          color: c.card,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: c.cardBorder),
-        ),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          AnimatedCounter(
-            value: value,
-            style: GoogleFonts.inter(fontSize: 34, fontWeight: FontWeight.w800, color: c.primary),
-          ),
-          const SizedBox(height: 4),
-          Text(label, style: GoogleFonts.inter(fontSize: 13, color: c.textSecondary)),
-        ]),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: c.cardBorder),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          )
+        ],
       ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          value,
+          style: GoogleFonts.inter(fontSize: 34, fontWeight: FontWeight.w800, color: c.primary),
+        ),
+        const SizedBox(height: 4),
+        Text(label, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: c.textSecondary)),
+      ]),
     );
   }
 }
@@ -297,7 +339,14 @@ class _TechBanner extends StatelessWidget {
   const _TechBanner();
 
   static const List<String> _techs = [
-    "FLUTTER", "DART", "TENSORFLOW", "PYTORCH", "FIREBASE", "SUPABASE"
+    "FLUTTER",
+    "DART",
+    "GETX",
+    "FIREBASE",
+    "GEMINI AI",
+    "STRIPE",
+    "NFC",
+    "REST APIS"
   ];
 
   @override
@@ -305,26 +354,30 @@ class _TechBanner extends StatelessWidget {
     final c = AppThemeColors.of(context);
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
         color: c.surface,
         border: Border.symmetric(horizontal: BorderSide(color: c.cardBorder)),
       ),
       child: Wrap(
         alignment: WrapAlignment.spaceEvenly,
-        spacing: 32,
-        runSpacing: 10,
-        children: _techs.map((t) => Text(t,
-            style: GoogleFonts.jetBrainsMono(
-                fontSize: 11, color: c.textMuted, letterSpacing: 1.5))).toList(),
+        spacing: 28,
+        runSpacing: 12,
+        children: _techs
+            .map((t) => Text(
+                  t,
+                  style: GoogleFonts.inter(
+                      fontSize: 12, fontWeight: FontWeight.w700, color: c.textMuted, letterSpacing: 1.5),
+                ))
+            .toList(),
       ),
     );
   }
 }
 
-// ─── PROJECTS SECTION ─────────────────────────────────────────────────────────
-class _ProjectsSection extends StatelessWidget {
-  const _ProjectsSection();
+// ─── FEATURED PROJECTS SECTION ────────────────────────────────────────────────
+class _FeaturedProjectsSection extends StatelessWidget {
+  const _FeaturedProjectsSection();
 
   @override
   Widget build(BuildContext context) {
@@ -334,17 +387,21 @@ class _ProjectsSection extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 20 : w * 0.05, vertical: 60),
+        horizontal: isMobile ? 20 : w * 0.06,
+        vertical: 60,
+      ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Container(width: 7, height: 7,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: c.primary)),
+          Container(
+              width: 8, height: 8, decoration: BoxDecoration(shape: BoxShape.circle, color: c.primary)),
           const SizedBox(width: 8),
-          Text("SYSTEM STATUS: DISPLAYING FEATURED OPERATIONS",
-              style: GoogleFonts.jetBrainsMono(
-                  fontSize: 10, color: c.textSecondary, letterSpacing: 0.5)),
+          Text(
+            "SELECTED SHOWCASE WORK",
+            style: GoogleFonts.inter(
+                fontSize: 12, fontWeight: FontWeight.w700, color: c.primaryDark, letterSpacing: 1),
+          ),
         ]),
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
         RichText(
           text: TextSpan(
             style: GoogleFonts.inter(
@@ -353,178 +410,149 @@ class _ProjectsSection extends StatelessWidget {
                 color: c.textPrimary,
                 height: 1.2),
             children: [
-              const TextSpan(text: "High-Performance\n"),
-              TextSpan(text: "Flutter Solutions",
-                  style: TextStyle(color: c.primary)),
+              const TextSpan(text: "High-Impact Mobile Solutions\nBuilt with "),
+              TextSpan(text: "Precision", style: TextStyle(color: c.primary)),
             ],
           ),
         ),
-        const SizedBox(height: 24),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: c.surface,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: c.cardBorder),
-          ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            _tLine("> Initializing portfolio_viewer.exe...", c),
-            _tLine("> Filtering by: Precision Engineering, AI Integration, Scalable UX.", c),
-            _tLine("> Projects found: ${PortfolioData.projects.length}. Rendering now.", c),
-          ]),
-        ),
         const SizedBox(height: 32),
-        if (isMobile)
-          Column(
-            children: List.generate(
-              PortfolioData.projects.length > 6 ? 6 : PortfolioData.projects.length,
-              (i) => Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: FadeSlideIn(
-                  delay: Duration(milliseconds: 100 * i),
-                  child: HoverCard(
-                    child: _ProjectCard(project: PortfolioData.projects[i], index: i, c: c),
-                  ),
-                ),
-              ),
-            ),
-          )
-        else
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(
-              PortfolioData.projects.length > 3 ? 3 : PortfolioData.projects.length,
-              (i) => Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: i < 2 ? 20 : 0),
-                  child: FadeSlideIn(
-                    delay: Duration(milliseconds: 150 * i),
-                    child: HoverCard(
-                      child: _ProjectCard(project: PortfolioData.projects[i], index: i, c: c),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+        Column(
+          children: PortfolioData.projects.take(4).map((proj) => Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: _ProjectRowCard(project: proj, c: c),
+          )).toList(),
+        ),
       ]),
     );
   }
-
-  Widget _tLine(String t, AppThemeColors c) => Padding(
-        padding: const EdgeInsets.only(bottom: 4),
-        child: Text(t, style: GoogleFonts.jetBrainsMono(fontSize: 12, color: c.textSecondary)),
-      );
 }
 
-class _ProjectCard extends StatelessWidget {
+class _ProjectRowCard extends StatefulWidget {
   final ProjectModel project;
-  final int index;
   final AppThemeColors c;
-  const _ProjectCard({required this.project, required this.index, required this.c});
+  const _ProjectRowCard({required this.project, required this.c});
 
-  static const List<String> _imgs = [
-    "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80",
-    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80",
-    "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=600&q=80",
-    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80",
-    "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=600&q=80",
-    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
-  ];
+  @override
+  State<_ProjectRowCard> createState() => _ProjectRowCardState();
+}
+
+class _ProjectRowCardState extends State<_ProjectRowCard> {
+  bool _hovered = false;
 
   @override
   Widget build(BuildContext context) {
-    final imgUrl = _imgs[index % _imgs.length];
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
+    final p = widget.project;
+    final c = widget.c;
+    final isMobile = MediaQuery.of(context).size.width < 700;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() => _hovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: c.card,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: c.cardBorder),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: _hovered ? c.primary : c.cardBorder,
+            width: _hovered ? 1.5 : 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: _hovered ? c.primary.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.03),
+              blurRadius: _hovered ? 16 : 8,
+              offset: const Offset(0, 4),
+            )
+          ],
         ),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          SizedBox(
-            height: 190,
-            child: Stack(fit: StackFit.expand, children: [
-              Image.network(imgUrl, fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(color: c.surface)),
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.3, 1.0],
-                      colors: [Colors.transparent, Colors.black.withValues(alpha: 0.85)],
-                    ),
-                  ),
+        child: isMobile
+            ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                _content(p, c),
+                const SizedBox(height: 16),
+                _button(p, c),
+              ])
+            : Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Expanded(child: _content(p, c)),
+                const SizedBox(width: 24),
+                _button(p, c),
+              ]),
+      ),
+    );
+  }
+
+  Widget _content(ProjectModel p, AppThemeColors c) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(color: c.greenTint, borderRadius: BorderRadius.circular(6)),
+                child: Text(
+                  p.platform.toUpperCase(),
+                  style: GoogleFonts.inter(
+                      fontSize: 11, fontWeight: FontWeight.w700, color: c.primaryDark),
                 ),
               ),
-              Positioned(bottom: 12, left: 14, right: 14,
-                child: Text(project.title,
-                    style: GoogleFonts.inter(
-                        fontSize: 17, fontWeight: FontWeight.w700, color: Colors.white))),
-            ]),
-          ),
-          Container(
-            color: c.card,
-            padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min, children: [
-              Wrap(spacing: 6, children: project.tags.take(2).map((t) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: c.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: c.primary.withValues(alpha: 0.3)),
-                    ),
-                    child: Text(t, style: GoogleFonts.jetBrainsMono(
-                        fontSize: 9, color: c.primary)),
-                  )).toList()),
-              const SizedBox(height: 8),
-              Text(project.title,
-                  style: GoogleFonts.inter(
-                      fontSize: 15, fontWeight: FontWeight.w700, color: c.textPrimary)),
-              const SizedBox(height: 5),
-              Text(project.description,
-                  style: GoogleFonts.inter(
-                      fontSize: 12, color: c.textSecondary, height: 1.5),
-                  maxLines: 3, overflow: TextOverflow.ellipsis),
-              const SizedBox(height: 12),
-              GestureDetector(
-                onTap: () async {
-                  if (project.link != null) {
-                    final uri = Uri.parse(project.link!);
-                    if (await canLaunchUrl(uri)) await launchUrl(uri);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: c.cardBorder),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text("View Case Study",
-                        style: GoogleFonts.inter(
-                            fontSize: 12, color: c.textSecondary, fontWeight: FontWeight.w500)),
-                    const SizedBox(width: 4),
-                    Icon(Icons.arrow_forward, size: 12, color: c.textSecondary),
-                  ]),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  p.title,
+                  style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w700, color: c.textPrimary),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ]),
+            ],
           ),
-        ]),
+          const SizedBox(height: 10),
+          Text(
+            p.description,
+            style: GoogleFonts.inter(fontSize: 13.5, color: c.textSecondary, height: 1.5),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            p.techStack,
+            style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600, color: c.primaryDark),
+          ),
+        ],
+      );
+
+  Widget _button(ProjectModel p, AppThemeColors c) {
+    if (p.link != null) {
+      return ElevatedButton.icon(
+        onPressed: () async {
+          final uri = Uri.parse(p.link!);
+          if (await canLaunchUrl(uri)) await launchUrl(uri);
+        },
+        icon: const Icon(Icons.launch, size: 14),
+        label: Text("Open Link", style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: c.primary,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
+    }
+    return OutlinedButton.icon(
+      onPressed: null,
+      icon: const Icon(Icons.check, size: 14),
+      label: Text("Production Ready", style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500)),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: c.textSecondary,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        side: BorderSide(color: c.cardBorder),
       ),
     );
   }
 }
 
-// ─── SYNTHETIC SECTION ────────────────────────────────────────────────────────
-class _SyntheticSection extends StatelessWidget {
-  const _SyntheticSection();
+// ─── ARCHITECTURE SECTION ─────────────────────────────────────────────────────
+class _ArchitectureSection extends StatelessWidget {
+  const _ArchitectureSection();
 
   @override
   Widget build(BuildContext context) {
@@ -534,58 +562,42 @@ class _SyntheticSection extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: isMobile ? 20 : w * 0.05, vertical: 60),
+        horizontal: isMobile ? 20 : w * 0.06,
+        vertical: 60,
+      ),
       decoration: BoxDecoration(
         color: c.surface,
         border: Border(top: BorderSide(color: c.cardBorder)),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          const Expanded(child: Divider()),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                border: Border.all(color: c.cardBorder),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(Icons.memory_rounded, color: c.primary, size: 20),
-            ),
-          ),
-          const Expanded(child: Divider()),
-        ]),
-        const SizedBox(height: 48),
-        isMobile
-            ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _left(c, isMobile),
-                const SizedBox(height: 28),
-                _codeBox(c),
-              ])
-            : Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Expanded(flex: 4, child: _left(c, isMobile)),
-                const SizedBox(width: 48),
-                Expanded(flex: 5, child: _codeBox(c)),
-              ]),
-      ]),
+      child: isMobile
+          ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              _left(c, isMobile),
+              const SizedBox(height: 28),
+              _codeBox(c),
+            ])
+          : Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Expanded(flex: 4, child: _left(c, isMobile)),
+              const SizedBox(width: 48),
+              Expanded(flex: 5, child: _codeBox(c)),
+            ]),
     );
   }
 
   Widget _left(AppThemeColors c, bool isMobile) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Synthetic Intelligence Core",
+          Text("Scalable Architecture & Clean Code",
               style: GoogleFonts.inter(
-                  fontSize: isMobile ? 22 : 28,
-                  fontWeight: FontWeight.w700,
-                  color: c.textPrimary)),
+                  fontSize: isMobile ? 24 : 30, fontWeight: FontWeight.w800, color: c.textPrimary)),
           const SizedBox(height: 12),
-          Text("Every project leverages Flutter-first architecture optimized for heavy computation, state management, and seamless AI integration.",
-              style: GoogleFonts.inter(fontSize: 14, color: c.textSecondary, height: 1.7)),
-          const SizedBox(height: 28),
-          _feat(c, Icons.speed_rounded, "High FPS Performance", "60fps guaranteed on low-end silicon."),
+          Text(
+            "Every mobile app is engineered with MVC architecture, GetX state management, robust RESTful API handlers, and clean dependency management for long-term scalability.",
+            style: GoogleFonts.inter(fontSize: 14.5, color: c.textSecondary, height: 1.7),
+          ),
+          const SizedBox(height: 24),
+          _feat(c, Icons.layers_outlined, "MVC & GetX Architecture", "Clean separation of presentation, logic, and data."),
           const SizedBox(height: 16),
-          _feat(c, Icons.lock_outline_rounded, "Quantum-Ready Security", "Encrypted payloads for sensitive AI data."),
+          _feat(c, Icons.monetization_on_outlined, "App Monetization & IAP", "AdMob ads & In-App Purchases integration."),
         ],
       );
 
@@ -593,45 +605,69 @@ class _SyntheticSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: c.primary.withValues(alpha: 0.12),
+              color: c.greenTint,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: c.primary, size: 18),
+            child: Icon(icon, color: c.primaryDark, size: 20),
           ),
           const SizedBox(width: 14),
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(title, style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: c.textPrimary)),
-            const SizedBox(height: 2),
-            Text(sub, style: GoogleFonts.inter(fontSize: 12, color: c.textSecondary)),
-          ])),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(title, style: GoogleFonts.inter(fontSize: 14.5, fontWeight: FontWeight.w700, color: c.textPrimary)),
+              const SizedBox(height: 2),
+              Text(sub, style: GoogleFonts.inter(fontSize: 12.5, color: c.textSecondary)),
+            ]),
+          ),
         ],
       );
 
   Widget _codeBox(AppThemeColors c) => Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(22),
         decoration: BoxDecoration(
-          color: c.card,
-          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(color: c.cardBorder),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            )
+          ],
         ),
-        child: Text(
-          '''class MusafLogic {
-  final List<Project> featured = [
-    RenovateAI(env: AI.do_generative),
-    Golumo(security: Encryption.AES256),
-    PlantEyes(engine: Engine.tensorflowLite),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.code, size: 18, color: AppColors.primary),
+                const SizedBox(width: 8),
+                Text(
+                  "architecture_sample.dart",
+                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: c.textPrimary),
+                ),
+              ],
+            ),
+            const SizedBox(height: 14),
+            Text(
+              '''class MusafPortfolioApp {
+  final List<String> coreStack = [
+    "Flutter", "Dart", "GetX", "MVC",
+    "Firebase Auth", "REST APIs", "AdMob",
+    "In-App Purchases", "Gemini AI"
   ];
 
-  void render() {
-    featured.forEach((p) => p.initialize());
-    print("UI_REFRESH_RATE: 120Hz");
-    print("STATUS: SYSTEM_STABLE");
+  void initializeApp() {
+    print("Connecting API Gateways...");
+    print("Loading Production UI Modules...");
+    print("Ready for Deployment to App Store & Play Store.");
   }
 }''',
-          style: GoogleFonts.jetBrainsMono(
-              fontSize: 12, color: c.textSecondary, height: 1.7),
+              style: GoogleFonts.jetBrainsMono(fontSize: 12.5, color: c.textSecondary, height: 1.6),
+            ),
+          ],
         ),
       );
 }
@@ -664,15 +700,20 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
           decoration: BoxDecoration(
-            color: _hovered ? widget.c.primaryLight : widget.c.primary,
+            color: _hovered ? widget.c.primaryDark : widget.c.primary,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: _hovered
-                ? [BoxShadow(color: widget.c.primary.withValues(alpha: 0.4), blurRadius: 16)]
-                : [],
+            boxShadow: [
+              BoxShadow(
+                color: widget.c.primary.withValues(alpha: _hovered ? 0.35 : 0.2),
+                blurRadius: _hovered ? 12 : 6,
+                offset: const Offset(0, 3),
+              )
+            ],
           ),
-          child: Text(widget.label,
-              style: GoogleFonts.inter(
-                  color: Colors.white, fontWeight: FontWeight.w600, fontSize: 14)),
+          child: Text(
+            widget.label,
+            style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 13.5),
+          ),
         ),
       ),
     );
@@ -706,15 +747,18 @@ class _OutlineButtonState extends State<_OutlineButton> {
           duration: const Duration(milliseconds: 180),
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
           decoration: BoxDecoration(
-            color: _hovered ? widget.c.primary.withValues(alpha: 0.08) : Colors.transparent,
+            color: _hovered ? widget.c.greenTint : Colors.white,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: _hovered ? widget.c.primary : widget.c.cardBorder),
           ),
-          child: Text(widget.label,
-              style: GoogleFonts.inter(
-                  color: _hovered ? widget.c.primary : widget.c.textPrimary,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14)),
+          child: Text(
+            widget.label,
+            style: GoogleFonts.inter(
+              color: _hovered ? widget.c.primaryDark : widget.c.textPrimary,
+              fontWeight: FontWeight.w600,
+              fontSize: 13.5,
+            ),
+          ),
         ),
       ),
     );

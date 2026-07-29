@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen>
                 FadeTransition(
                   opacity: _logoOpacity,
                   child: Text(
-                    "MUSAF.AI",
+                    "MUSAF.DEV",
                     style: GoogleFonts.inter(
                       fontSize: 32,
                       fontWeight: FontWeight.w800,
