@@ -28,7 +28,7 @@ class PortfolioFooter extends StatelessWidget {
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Brand
           Expanded(flex: 3, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text("MUSAF.AI",
+            Text("MUSAF.DEV",
                 style: GoogleFonts.inter(
                     fontSize: 18, fontWeight: FontWeight.w800,
                     color: c.textPrimary, letterSpacing: 1)),
@@ -53,6 +53,7 @@ class PortfolioFooter extends StatelessWidget {
                     fontSize: 13, fontWeight: FontWeight.w700, color: c.textPrimary)),
             const SizedBox(height: 12),
             _HoverNavLink(label: "Portfolio", c: c),
+            _HoverNavLink(label: "Projects", c: c),
             _HoverNavLink(label: "Skills", c: c),
             _HoverNavLink(label: "Experience", c: c),
             _HoverNavLink(label: "Contact", c: c),
@@ -83,16 +84,16 @@ class PortfolioFooter extends StatelessWidget {
         Divider(color: c.cardBorder),
         const SizedBox(height: 16),
         Row(children: [
-          Text("© 2025 Musaf Ali. All rights reserved.",
+          Text("© 2026 Musaf Ali. All rights reserved.",
               style: GoogleFonts.inter(fontSize: 12, color: c.textSecondary)),
           const Spacer(),
           Text("Built with Flutter",
-              style: GoogleFonts.jetBrainsMono(fontSize: 11, color: c.textMuted)),
+              style: GoogleFonts.jetBrainsMono(fontSize: 11, color: c.primary)),
         ]),
       ]);
 
   Widget _mobile(AppThemeColors c) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text("MUSAF.AI",
+        Text("MUSAF.DEV",
             style: GoogleFonts.inter(
                 fontSize: 18, fontWeight: FontWeight.w800, color: c.textPrimary)),
         const SizedBox(height: 6),
@@ -109,7 +110,7 @@ class PortfolioFooter extends StatelessWidget {
         const SizedBox(height: 24),
         Divider(color: c.cardBorder),
         const SizedBox(height: 16),
-        Text("© 2025 Musaf Ali. All rights reserved.",
+        Text("© 2026 Musaf Ali. All rights reserved.",
             style: GoogleFonts.inter(fontSize: 12, color: c.textSecondary)),
       ]);
 

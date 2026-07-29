@@ -49,3 +49,19 @@ class ExperienceModel {
     required this.tags,
   });
 }
+
+class EducationModel {
+  final String degree;
+  final String institution;
+  final String period;
+  final String location;
+  final String details;
+
+  EducationModel({
+    required this.degree,
+    required this.institution,
+    required this.period,
+    required this.location,
+    required this.details,
+  });
+}

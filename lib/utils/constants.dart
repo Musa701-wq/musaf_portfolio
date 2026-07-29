@@ -2,46 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
-  static const Color background = Color(0xFF0D1117);
-  static const Color surface = Color(0xFF161B22);
-  static const Color card = Color(0xFF1C2333);
-  static const Color cardBorder = Color(0xFF30363D);
-  static const Color border = Color(0xFF30363D);
-  static const Color primary = Color(0xFF58A6FF);
-  static const Color primaryLight = Color(0xFF79BEFF);
-  static const Color accent = Color(0xFF3FB950);
-  static const Color accentGreen = Color(0xFF3FB950);
-  static const Color textPrimary = Color(0xFFE6EDF3);
-  static const Color textSecondary = Color(0xFF8B949E);
-  static const Color textMuted = Color(0xFF484F58);
-  static const Color terminalGreen = Color(0xFF39D353);
+  static const Color background = Color(0xFFFFFFFF);
+  static const Color surface = Color(0xFFF8FAFC);
+  static const Color card = Color(0xFFFFFFFF);
+  static const Color cardBorder = Color(0xFFE2E8F0);
+  static const Color border = Color(0xFFE2E8F0);
+  static const Color primary = Color(0xFF10B981); // Emerald Green
+  static const Color primaryLight = Color(0xFF34D399); // Soft Emerald Green
+  static const Color primaryDark = Color(0xFF047857); // Deep Green
+  static const Color accent = Color(0xFF10B981);
+  static const Color accentGreen = Color(0xFF059669);
+  static const Color textPrimary = Color(0xFF0F172A); // Slate 900
+  static const Color textSecondary = Color(0xFF475569); // Slate 600
+  static const Color textMuted = Color(0xFF94A3B8); // Slate 400
+  static const Color greenTint = Color(0xFFECFDF5); // Emerald 50
+  static const Color terminalGreen = Color(0xFF10B981);
 }
 
 class LightColors {
-  static const Color background = Color(0xFFF6F8FA);
-  static const Color surface = Color(0xFFFFFFFF);
+  static const Color background = Color(0xFFFFFFFF);
+  static const Color surface = Color(0xFFF8FAFC);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color cardBorder = Color(0xFFD0D7DE);
-  static const Color primary = Color(0xFF0969DA);
-  static const Color primaryLight = Color(0xFF218BFF);
-  static const Color accent = Color(0xFF1A7F37);
-  static const Color accentGreen = Color(0xFF1A7F37);
-  static const Color textPrimary = Color(0xFF1F2328);
-  static const Color textSecondary = Color(0xFF656D76);
-  static const Color textMuted = Color(0xFF9198A1);
+  static const Color cardBorder = Color(0xFFE2E8F0);
+  static const Color primary = Color(0xFF10B981);
+  static const Color primaryLight = Color(0xFF34D399);
+  static const Color accent = Color(0xFF059669);
+  static const Color accentGreen = Color(0xFF059669);
+  static const Color textPrimary = Color(0xFF0F172A);
+  static const Color textSecondary = Color(0xFF475569);
+  static const Color textMuted = Color(0xFF94A3B8);
+  static const Color greenTint = Color(0xFFECFDF5);
 }
 
 class AppTheme {
   static ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.background,
     primaryColor: AppColors.primary,
-    colorScheme: const ColorScheme.dark(
+    colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.accent,
       surface: AppColors.surface,
     ),
-    textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme).apply(
+    textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme).apply(
       bodyColor: AppColors.textPrimary,
       displayColor: AppColors.textPrimary,
     ),
@@ -62,3 +65,4 @@ class AppTheme {
     ),
   );
 }
+

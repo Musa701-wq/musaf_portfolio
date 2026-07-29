@@ -14,26 +14,53 @@ class PortfolioNavbar extends StatelessWidget {
     required this.onTabChanged,
   });
 
-  static const List<String> _tabs = ["Portfolio", "Skills", "Experience", "Contact"];
+  static const List<String> _tabs = [
+    "Portfolio",
+    "Projects",
+    "Skills",
+    "Experience",
+    "Contact"
+  ];
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = MediaQuery.of(context).size.width < 700;
+    final isMobile = MediaQuery.of(context).size.width < 750;
 
     return Container(
-      height: 56,
-      color: AppColors.background,
+      height: 60,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(color: AppColors.cardBorder, width: 1),
+        ),
+      ),
       padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 40),
       child: Row(
         children: [
-          // Logo with subtle glow
-          Text(
-            "MUSAF.AI",
-            style: GoogleFonts.inter(
-              color: AppColors.textPrimary,
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-              letterSpacing: 0.5,
+          // Logo with green dot accent
+          GestureDetector(
+            onTap: () => onTabChanged(0),
+            child: Row(
+              children: [
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  "MUSAF.DEV",
+                  style: GoogleFonts.inter(
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                    letterSpacing: 0.8,
+                  ),
+                ),
+              ],
             ),
           ),
           const Spacer(),
@@ -53,16 +80,22 @@ class PortfolioNavbar extends StatelessWidget {
           if (isMobile) ...[
             const SizedBox(width: 10),
             PopupMenuButton<int>(
-              color: AppColors.card,
-              icon: const Icon(Icons.menu, color: AppColors.textPrimary, size: 20),
+              color: Colors.white,
+              elevation: 4,
+              icon: const Icon(Icons.menu, color: AppColors.textPrimary, size: 22),
               onSelected: onTabChanged,
               itemBuilder: (_) => List.generate(
                 _tabs.length,
                 (i) => PopupMenuItem(
                   value: i,
-                  child: Text(_tabs[i],
-                      style: GoogleFonts.inter(
-                          color: AppColors.textPrimary, fontSize: 14)),
+                  child: Text(
+                    _tabs[i],
+                    style: GoogleFonts.inter(
+                      color: i == currentIndex ? AppColors.primary : AppColors.textPrimary,
+                      fontWeight: i == currentIndex ? FontWeight.w700 : FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -91,32 +124,32 @@ class _NavTabState extends State<_NavTab> {
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        duration: const Duration(milliseconds: 150),
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: widget.active
-                  ? AppColors.primary
-                  : _hovered
-                      ? AppColors.primary.withValues(alpha: 0.4)
-                      : Colors.transparent,
-              width: 2,
-            ),
+          color: widget.active
+              ? AppColors.greenTint
+              : _hovered
+                  ? AppColors.surface
+                  : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: widget.active
+                ? AppColors.primary.withValues(alpha: 0.4)
+                : Colors.transparent,
           ),
         ),
         child: Text(
           widget.label,
           style: GoogleFonts.inter(
             color: widget.active
-                ? AppColors.textPrimary
+                ? AppColors.primaryDark
                 : _hovered
-                    ? AppColors.textPrimary.withValues(alpha: 0.8)
+                    ? AppColors.textPrimary
                     : AppColors.textSecondary,
-            fontWeight:
-                widget.active ? FontWeight.w600 : FontWeight.w400,
-            fontSize: 14,
+            fontWeight: widget.active ? FontWeight.w700 : FontWeight.w500,
+            fontSize: 13.5,
           ),
         ),
       ),
@@ -143,22 +176,18 @@ class _HireMeButtonState extends State<_HireMeButton> {
           if (await canLaunchUrl(uri)) await launchUrl(uri);
         },
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           decoration: BoxDecoration(
-            color: _hovered
-                ? AppColors.primaryLight
-                : AppColors.primary,
-            borderRadius: BorderRadius.circular(6),
-            boxShadow: _hovered
-                ? [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.4),
-                      blurRadius: 12,
-                      spreadRadius: 1,
-                    )
-                  ]
-                : [],
+            color: _hovered ? AppColors.primaryDark : AppColors.primary,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: _hovered ? 0.35 : 0.2),
+                blurRadius: _hovered ? 12 : 6,
+                offset: const Offset(0, 3),
+              )
+            ],
           ),
           child: Text(
             "Hire Me",
@@ -173,3 +202,4 @@ class _HireMeButtonState extends State<_HireMeButton> {
     );
   }
 }
+
