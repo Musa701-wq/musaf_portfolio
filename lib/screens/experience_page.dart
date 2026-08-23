@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/constants.dart';
-import '../utils/theme_colors.dart';
 import '../utils/data.dart';
 import '../models/portfolio_models.dart';
 import '../widgets/footer.dart';
@@ -132,7 +131,11 @@ class ExperiencePage extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 24),
                     child: FadeSlideIn(
                       delay: Duration(milliseconds: idx * 120),
-                      child: _ExperienceCard(exp: exp),
+                      child: Card3DTilt(
+                        glowColor: AppColors.primary,
+                        borderRadius: BorderRadius.circular(20),
+                        child: _ExperienceCard(exp: exp),
+                      ),
                     ),
                   );
                 }),
@@ -161,7 +164,11 @@ class ExperiencePage extends StatelessWidget {
                 // Education Cards
                 ...PortfolioData.education.asMap().entries.map((entry) {
                   final edu = entry.value;
-                  return _EducationCard(edu: edu);
+                  return Card3DTilt(
+                    glowColor: AppColors.primary,
+                    borderRadius: BorderRadius.circular(20),
+                    child: _EducationCard(edu: edu),
+                  );
                 }),
               ],
             ),

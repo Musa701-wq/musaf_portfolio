@@ -33,11 +33,11 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
 
     _logoCtrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 400));
+        vsync: this, duration: const Duration(milliseconds: 200));
     _barCtrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 800));
+        vsync: this, duration: const Duration(milliseconds: 400));
     _fadeCtrl = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+        vsync: this, duration: const Duration(milliseconds: 200));
 
     _logoOpacity = Tween<double>(begin: 0, end: 1)
         .animate(CurvedAnimation(parent: _logoCtrl, curve: Curves.easeOut));
@@ -50,15 +50,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _start() async {
-    await _logoCtrl.forward();
-    // type boot lines
-    for (int i = 0; i < _bootLines.length; i++) {
-      await Future.delayed(const Duration(milliseconds: 120));
-      if (mounted) setState(() => _lineIndex = i + 1);
-    }
-    _barCtrl.forward();
-    await Future.delayed(const Duration(milliseconds: 900));
-    await _fadeCtrl.forward();
+    _logoCtrl.value = 1.0;
+    _barCtrl.value = 1.0;
+    if (mounted) setState(() => _lineIndex = _bootLines.length);
+    await Future.delayed(const Duration(milliseconds: 100));
     widget.onDone();
   }
 

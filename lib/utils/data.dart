@@ -19,10 +19,10 @@ class PortfolioData {
 
   static const List<String> terminalLines = [
     "Initializing flutter_engine v3.22...",
-    "Loading GetX state management & MVC...",
-    "Connecting Firebase & REST API Gateways...",
-    "Gemini AI & NFC Modules Synchronized.",
-    "STATUS: 9 PRODUCTION APPS READY.",
+    "Loading GetX & Provider MVVM architecture...",
+    "Connecting WebSockets & DefiLlama APIs...",
+    "Gemini AI, NFC & DeFi Analytics Engine Synchronized.",
+    "STATUS: 10 PRODUCTION APPS READY.",
   ];
 
   static final List<EducationModel> education = [
@@ -43,8 +43,10 @@ class PortfolioData {
     // Architecture & State Management
     SkillModel(name: "MVC Architecture", icon: FontAwesomeIcons.layerGroup, level: 0.88, category: "Architecture"),
     SkillModel(name: "GetX State Management", icon: FontAwesomeIcons.bolt, level: 0.90, category: "Architecture"),
+    SkillModel(name: "Provider (MVVM Pattern)", icon: FontAwesomeIcons.cubes, level: 0.86, category: "Architecture"),
     // Backend & APIs
     SkillModel(name: "RESTful APIs", icon: FontAwesomeIcons.server, level: 0.88, category: "Backend & APIs"),
+    SkillModel(name: "WebSockets & Real-Time Data", icon: FontAwesomeIcons.networkWired, level: 0.86, category: "Backend & APIs"),
     SkillModel(name: ".NET Backend Integration", icon: FontAwesomeIcons.microsoft, level: 0.82, category: "Backend & APIs"),
     SkillModel(name: "Node.js Integration", icon: FontAwesomeIcons.nodeJs, level: 0.80, category: "Backend & APIs"),
     // Firebase Services
@@ -96,6 +98,15 @@ class PortfolioData {
   ];
 
   static final List<ProjectModel> projects = [
+    ProjectModel(
+      title: "CoinDuck – Institutional DeFi & Crypto Analytics",
+      description:
+          "Institutional-grade DeFi & crypto analytics mobile platform delivering real-time Total Value Locked (TVL) multi-chain tracking (DefiLlama API), protocol fee breakdowns, derivatives Open Interest (OI) heatmaps, liquidation pool risk metrics, dynamic interactive fl_chart visualizations, WebSockets real-time pipeline, and In-App Purchase subscription tiers.",
+      techStack: "Flutter • Dart • Provider Architecture • WebSockets • DefiLlama API • fl_chart • In-App Purchases • Firebase Analytics",
+      platform: "iOS / Android",
+      link: null,
+      tags: ["DeFi Analytics", "WebSockets", "Provider (MVVM)", "fl_chart", "IAP"],
+    ),
     ProjectModel(
       title: "Elite Guard – Security Monitoring System",
       description:
@@ -165,7 +176,7 @@ class PortfolioData {
           "AI photo restoration app repairing blurry, damaged, scratched, and low-quality images using AI face enhancement, scratch removal, colorization, high-res export, Firebase Analytics, and In-App Purchases.",
       techStack: "Flutter • Dart • AI Image Processing • Firebase Auth • Analytics • In-App Purchases • REST APIs",
       platform: "iOS App Store",
-      link: null,
+      link: "https://apps.apple.com/us/app/revivepix-ai-photo-enhancer/id6759591110",
       tags: ["AI Image Processing", "iOS", "Flutter", "IAP"],
     ),
     ProjectModel(

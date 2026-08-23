@@ -7,8 +7,10 @@ class AppThemeColors {
   final Color card;
   final Color cardBorder;
   final Color primary;
+  final Color primaryDark;
   final Color primaryLight;
   final Color accentGreen;
+  final Color greenTint;
   final Color textPrimary;
   final Color textSecondary;
   final Color textMuted;
@@ -20,8 +22,10 @@ class AppThemeColors {
     required this.card,
     required this.cardBorder,
     required this.primary,
+    required this.primaryDark,
     required this.primaryLight,
     required this.accentGreen,
+    required this.greenTint,
     required this.textPrimary,
     required this.textSecondary,
     required this.textMuted,
@@ -39,8 +43,10 @@ class AppThemeColors {
     card: AppColors.card,
     cardBorder: AppColors.cardBorder,
     primary: AppColors.primary,
+    primaryDark: AppColors.primaryDark,
     primaryLight: AppColors.primaryLight,
     accentGreen: AppColors.accentGreen,
+    greenTint: AppColors.greenTint,
     textPrimary: AppColors.textPrimary,
     textSecondary: AppColors.textSecondary,
     textMuted: AppColors.textMuted,
@@ -54,8 +60,10 @@ class AppThemeColors {
     card: LightColors.card,
     cardBorder: LightColors.cardBorder,
     primary: LightColors.primary,
+    primaryDark: LightColors.primaryDark,
     primaryLight: LightColors.primaryLight,
     accentGreen: LightColors.accentGreen,
+    greenTint: LightColors.greenTint,
     textPrimary: LightColors.textPrimary,
     textSecondary: LightColors.textSecondary,
     textMuted: LightColors.textMuted,
