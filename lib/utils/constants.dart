@@ -19,6 +19,38 @@ class AppColors {
   static const Color terminalGreen = Color(0xFF10B981);
 }
 
+class AppGradients {
+  static const LinearGradient primary = LinearGradient(
+    colors: [Color(0xFF059669), Color(0xFF10B981), Color(0xFF06B6D4)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient heroText = LinearGradient(
+    colors: [Color(0xFF047857), Color(0xFF10B981), Color(0xFF0284C7)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+
+  static const LinearGradient button = LinearGradient(
+    colors: [Color(0xFF10B981), Color(0xFF059669)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient accentPill = LinearGradient(
+    colors: [Color(0xFFECFDF5), Color(0xFFE0F2FE)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient cardHeader = LinearGradient(
+    colors: [Color(0xFFD1FAE5), Color(0xFFCFFAFE), Color(0xFFF0FDFA)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+}
+
 class LightColors {
   static const Color background = Color(0xFFFFFFFF);
   static const Color surface = Color(0xFFF8FAFC);
@@ -26,6 +58,7 @@ class LightColors {
   static const Color cardBorder = Color(0xFFE2E8F0);
   static const Color primary = Color(0xFF10B981);
   static const Color primaryLight = Color(0xFF34D399);
+  static const Color primaryDark = Color(0xFF047857);
   static const Color accent = Color(0xFF059669);
   static const Color accentGreen = Color(0xFF059669);
   static const Color textPrimary = Color(0xFF0F172A);

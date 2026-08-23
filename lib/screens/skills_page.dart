@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/constants.dart';
-import '../utils/theme_colors.dart';
 import '../utils/data.dart';
 import '../models/portfolio_models.dart';
 import '../widgets/footer.dart';
@@ -128,9 +127,13 @@ class SkillsPage extends StatelessWidget {
                       width: itemWidth,
                       child: FadeSlideIn(
                         delay: Duration(milliseconds: (idx % 6) * 80),
-                        child: _SkillCategoryCard(
-                          categoryName: catName,
-                          skills: skillsList,
+                        child: Card3DTilt(
+                          glowColor: AppColors.primary,
+                          borderRadius: BorderRadius.circular(20),
+                          child: _SkillCategoryCard(
+                            categoryName: catName,
+                            skills: skillsList,
+                          ),
                         ),
                       ),
                     );
@@ -164,111 +167,129 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard> {
     return MouseRegion(
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: _hovered ? AppColors.primary : AppColors.cardBorder,
-            width: _hovered ? 1.5 : 1,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: _hovered
-                  ? AppColors.primary.withValues(alpha: 0.1)
-                  : Colors.black.withValues(alpha: 0.03),
-              blurRadius: _hovered ? 16 : 8,
-              offset: const Offset(0, 4),
-            )
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Stack(
           children: [
-            // Category Header
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: AppColors.greenTint,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(
-                    widget.skills.first.icon,
-                    color: AppColors.primaryDark,
-                    size: 20,
-                  ),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: _hovered ? AppColors.primary : AppColors.cardBorder,
+                  width: _hovered ? 1.5 : 1,
                 ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(
-                    widget.categoryName,
-                    style: GoogleFonts.inter(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Divider(color: AppColors.cardBorder, height: 1),
-            const SizedBox(height: 16),
-            // Skill Items
-            Column(
-              children: widget.skills.map((skill) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                boxShadow: [
+                  BoxShadow(
+                    color: _hovered
+                        ? AppColors.primary.withValues(alpha: 0.12)
+                        : Colors.black.withValues(alpha: 0.03),
+                    blurRadius: _hovered ? 20 : 8,
+                    offset: Offset(0, _hovered ? 8 : 2),
+                  )
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Category Header
+                  Row(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(skill.icon, size: 14, color: AppColors.primary),
-                              const SizedBox(width: 8),
-                              Text(
-                                skill.name,
-                                style: GoogleFonts.inter(
-                                  fontSize: 13.5,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            "${(skill.level * 100).toInt()}%",
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primaryDark,
-                            ),
-                          ),
-                        ],
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.greenTint,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          widget.skills.first.icon,
+                          color: AppColors.primaryDark,
+                          size: 20,
+                        ),
                       ),
-                      const SizedBox(height: 6),
-                      // Progress Bar
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: skill.level,
-                          minHeight: 5,
-                          backgroundColor: AppColors.surface,
-                          valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Text(
+                          widget.categoryName,
+                          style: GoogleFonts.inter(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                );
-              }).toList(),
+                  const SizedBox(height: 20),
+                  const Divider(color: AppColors.cardBorder, height: 1),
+                  const SizedBox(height: 16),
+                  // Skill Items
+                  Column(
+                    children: widget.skills.map((skill) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(skill.icon, size: 14, color: AppColors.primary),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      skill.name,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 13.5,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.textPrimary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "${(skill.level * 100).toInt()}%",
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.primaryDark,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 6),
+                            // Progress Bar
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: LinearProgressIndicator(
+                                value: skill.level,
+                                minHeight: 5,
+                                backgroundColor: AppColors.surface,
+                                valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: _hovered ? 6 : 4,
+                decoration: const BoxDecoration(
+                  gradient: AppGradients.primary,
+                ),
+              ),
             ),
           ],
         ),

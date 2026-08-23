@@ -287,7 +287,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             width: itemWidth,
                             child: FadeSlideIn(
                               delay: Duration(milliseconds: (idx % 6) * 70),
-                              child: _ProjectCard(project: proj),
+                              child: Card3DTilt(
+                                glowColor: AppColors.primary,
+                                borderRadius: BorderRadius.circular(20),
+                                child: _ProjectCard(project: proj),
+                              ),
                             ),
                           );
                         }).toList(),
@@ -343,147 +347,147 @@ class _ProjectCardState extends State<_ProjectCard> {
             )
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Platform & Badge Row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: AppColors.greenTint,
-                    borderRadius: BorderRadius.circular(6),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Platform & Badge Row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppColors.greenTint,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          p.platform.toUpperCase(),
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.primaryDark,
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                      ),
+                      if (p.link != null)
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade50,
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: Colors.blue.shade200),
+                          ),
+                          child: Text(
+                            "Live Store",
+                            style: GoogleFonts.inter(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue.shade800,
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-                  child: Text(
-                    p.platform.toUpperCase(),
+                  const SizedBox(height: 16),
+                  // Title
+                  Text(
+                    p.title,
                     style: GoogleFonts.inter(
-                      fontSize: 11,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.primaryDark,
-                      letterSpacing: 0.8,
+                      color: AppColors.textPrimary,
                     ),
                   ),
-                ),
-                if (p.link != null)
+                  const SizedBox(height: 8),
+                  // Description
+                  Text(
+                    p.description,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.inter(
+                      fontSize: 13.5,
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Tech Stack Badge
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.blue.shade50,
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: Colors.blue.shade200),
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.cardBorder),
                     ),
                     child: Text(
-                      "Live Store",
+                      p.techStack,
                       style: GoogleFonts.inter(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.blue.shade800,
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryDark,
+                        height: 1.4,
                       ),
                     ),
                   ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            // Title
-            Text(
-              p.title,
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            // Description
-            Text(
-              p.description,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.inter(
-                fontSize: 13.5,
-                color: AppColors.textSecondary,
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Tech Stack Badge
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.cardBorder),
-              ),
-              child: Text(
-                p.techStack,
-                style: GoogleFonts.inter(
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.primaryDark,
-                  height: 1.4,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Action button
-            Row(
-              children: [
-                if (p.link != null)
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () async {
-                        final uri = Uri.parse(p.link!);
-                        if (await canLaunchUrl(uri)) await launchUrl(uri);
-                      },
-                      icon: const Icon(Icons.launch, size: 14),
-                      label: Text(
-                        "Open Store Page",
-                        style: GoogleFonts.inter(
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.w600,
+                  const SizedBox(height: 20),
+                  // Action button
+                  Row(
+                    children: [
+                      if (p.link != null)
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: () async {
+                              final uri = Uri.parse(p.link!);
+                              if (await canLaunchUrl(uri)) await launchUrl(uri);
+                            },
+                            icon: const Icon(Icons.launch, size: 14),
+                            label: Text(
+                              "Open Store Page",
+                              style: GoogleFonts.inter(
+                                fontSize: 12.5,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(vertical: 11),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        )
+                      else
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: null,
+                            icon: const Icon(Icons.check, size: 14),
+                            label: Text(
+                              "Production Ready",
+                              style: GoogleFonts.inter(
+                                fontSize: 12.5,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: AppColors.textSecondary,
+                              padding: const EdgeInsets.symmetric(vertical: 11),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              side: const BorderSide(color: AppColors.cardBorder),
+                            ),
+                          ),
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(vertical: 11),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  )
-                else
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: null,
-                      icon: const Icon(Icons.check_circle_outline, size: 14),
-                      label: Text(
-                        "Production Ready",
-                        style: GoogleFonts.inter(
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.textSecondary,
-                        padding: const EdgeInsets.symmetric(vertical: 11),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        side: const BorderSide(color: AppColors.cardBorder),
-                      ),
-                    ),
+                    ],
                   ),
-              ],
-            ),
-          ],
-        ),
+                ],
+              ),
       ),
     );
   }

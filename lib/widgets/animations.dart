@@ -331,3 +331,157 @@ class _ScrollFadeInState extends State<ScrollFadeIn>
         child: SlideTransition(position: _slide, child: widget.child),
       );
 }
+
+/// Interactive 3D Perspective Tilt Card with dynamic depth & glow
+class Card3DTilt extends StatefulWidget {
+  final Widget child;
+  final double maxTiltDegrees;
+  final Color glowColor;
+  final BorderRadius borderRadius;
+
+  const Card3DTilt({
+    super.key,
+    required this.child,
+    this.maxTiltDegrees = 6.0,
+    this.glowColor = const Color(0xFF10B981),
+    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+  });
+
+  @override
+  State<Card3DTilt> createState() => _Card3DTiltState();
+}
+
+class _Card3DTiltState extends State<Card3DTilt> {
+  double _rotateX = 0;
+  double _rotateY = 0;
+  bool _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovered = true),
+      onExit: (_) => setState(() {
+        _hovered = false;
+        _rotateX = 0;
+        _rotateY = 0;
+      }),
+      onHover: (event) {
+        final renderBox = context.findRenderObject() as RenderBox?;
+        if (renderBox != null) {
+          final size = renderBox.size;
+          final localPos = event.localPosition;
+          final px = (localPos.dx / size.width) - 0.5;
+          final py = (localPos.dy / size.height) - 0.5;
+          final maxRad = widget.maxTiltDegrees * (3.1415926535 / 180.0);
+          setState(() {
+            _rotateX = -py * maxRad * 2;
+            _rotateY = px * maxRad * 2;
+          });
+        }
+      },
+      child: AnimatedContainer(
+        duration: _hovered ? const Duration(milliseconds: 80) : const Duration(milliseconds: 350),
+        curve: _hovered ? Curves.easeOutQuad : Curves.easeOutCubic,
+        transform: (Matrix4.identity()
+          ..setEntry(3, 2, 0.0012)
+          ..rotateX(_rotateX)
+          ..rotateY(_rotateY))
+          .multiplied(Matrix4.translationValues(0.0, _hovered ? -6.0 : 0.0, 0.0)),
+        transformAlignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: widget.borderRadius,
+          boxShadow: [
+            BoxShadow(
+              color: widget.glowColor.withValues(alpha: _hovered ? 0.22 : 0.05),
+              blurRadius: _hovered ? 24 : 10,
+              spreadRadius: _hovered ? 2 : 0,
+              offset: Offset(_rotateY * 8, 6 + (-_rotateX * 8)),
+            ),
+          ],
+        ),
+        child: widget.child,
+      ),
+    );
+  }
+}
+
+/// Gradient text widget that renders text with a shader gradient
+class GradientText extends StatelessWidget {
+  final String text;
+  final TextStyle style;
+  final Gradient gradient;
+  final TextAlign textAlign;
+
+  const GradientText(
+    this.text, {
+    super.key,
+    required this.style,
+    required this.gradient,
+    this.textAlign = TextAlign.start,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => gradient.createShader(
+        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+      ),
+      child: Text(
+        text,
+        style: style,
+        textAlign: textAlign,
+      ),
+    );
+  }
+}
+
+/// Floating Ambient Glowing Background mesh circles
+class AnimatedGlowBackground extends StatelessWidget {
+  final Widget child;
+  const AnimatedGlowBackground({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          left: -80,
+          top: -60,
+          child: Container(
+            width: 380,
+            height: 380,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: [
+                  const Color(0xFF10B981).withValues(alpha: 0.12),
+                  const Color(0xFF10B981).withValues(alpha: 0.0),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: -100,
+          bottom: -80,
+          child: Container(
+            width: 420,
+            height: 420,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: [
+                  const Color(0xFF06B6D4).withValues(alpha: 0.10),
+                  const Color(0xFF06B6D4).withValues(alpha: 0.0),
+                ],
+              ),
+            ),
+          ),
+        ),
+        child,
+      ],
+    );
+  }
+}

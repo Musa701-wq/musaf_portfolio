@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../utils/constants.dart';
 import '../utils/data.dart';
 import '../widgets/footer.dart';
+import '../widgets/animations.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
@@ -127,7 +128,11 @@ class _ContactPageState extends State<ContactPage> {
                     children: [
                       _buildContactInfoGrid(context),
                       const SizedBox(height: 32),
-                      _buildMessageForm(context),
+                      Card3DTilt(
+                        glowColor: AppColors.primary,
+                        borderRadius: BorderRadius.circular(20),
+                        child: _buildMessageForm(context),
+                      ),
                     ],
                   )
                 : Row(
@@ -135,7 +140,14 @@ class _ContactPageState extends State<ContactPage> {
                     children: [
                       Expanded(flex: 5, child: _buildContactInfoGrid(context)),
                       const SizedBox(width: 40),
-                      Expanded(flex: 6, child: _buildMessageForm(context)),
+                      Expanded(
+                        flex: 6,
+                        child: Card3DTilt(
+                          glowColor: AppColors.primary,
+                          borderRadius: BorderRadius.circular(20),
+                          child: _buildMessageForm(context),
+                        ),
+                      ),
                     ],
                   ),
           ),
@@ -290,7 +302,7 @@ class _ContactPageState extends State<ContactPage> {
                   ),
                   const SizedBox(height: 6),
                   DropdownButtonFormField<String>(
-                    value: _selectedService,
+                    initialValue: _selectedService,
                     onChanged: (val) => setState(() => _selectedService = val!),
                     items: _services
                         .map((s) => DropdownMenuItem(

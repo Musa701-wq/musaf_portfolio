@@ -42,7 +42,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
           theme: _themeNotifier.isDark
               ? AppTheme.darkTheme
               : AppTheme.lightTheme,
-          home: const _AppEntry(),
+          home: const MainShell(),
         ),
       ),
     );
