@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../utils/constants.dart';
 import '../utils/data.dart';
 import '../models/portfolio_models.dart';
@@ -203,7 +204,7 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard> {
                           color: AppColors.greenTint,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Icon(
+                        child: FaIcon(
                           widget.skills.first.icon,
                           color: AppColors.primaryDark,
                           size: 20,
@@ -238,7 +239,7 @@ class _SkillCategoryCardState extends State<_SkillCategoryCard> {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(skill.icon, size: 14, color: AppColors.primary),
+                                    FaIcon(skill.icon, size: 14, color: AppColors.primary),
                                     const SizedBox(width: 8),
                                     Text(
                                       skill.name,
